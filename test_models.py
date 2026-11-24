@@ -1,4 +1,5 @@
 from models import Scenario
+from models import Turn
 import pytest
 from pydantic import ValidationError
 
@@ -53,3 +54,16 @@ def test_runs_must_be_a_number () :
 
     with pytest.raises(ValidationError):
             Scenario.model_validate(run_bad_data)
+
+def test_turn_tool_calls_default():
+    turn_data = {
+        "role": "user",
+        "content": "i want to send an email",
+    }
+
+    turn = Turn.model_validate(turn_data)
+
+    assert turn.role == "user"
+    assert turn.content == "i want to send an email"
+    assert turn.tool_calls == []
+          
