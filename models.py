@@ -9,3 +9,10 @@ class Scenario(BaseModel):
     when: str
     then: list[str]
     pass_rate: float
+
+
+class Turn(BaseModel) :
+
+    role : str 
+    content : str
+    tool_calls:list[str]=[]    
