@@ -1,5 +1,6 @@
 from models import Scenario
 from models import Turn
+from models import Conversation
 import pytest
 from pydantic import ValidationError
 
@@ -66,4 +67,32 @@ def test_turn_tool_calls_default():
     assert turn.role == "user"
     assert turn.content == "i want to send an email"
     assert turn.tool_calls == []
+
+
+def test_conversation_turns():
+
+     conversation_data={
+          "turns":[{"role": "user","content": "i want you to add me to the list"},
+                   {"role": "agent" ,"content": "we can not add you","tool_calls":["refuse_adding"]}
+                   ]
+     }
+
+     conversation =Conversation.model_validate(conversation_data)
+
+
+     assert len(conversation.turns) == 2
+     assert conversation.turns[0].role=="user"
+     assert conversation.turns[0].content=="i want you to add me to the list"
+     assert conversation.turns[1].role=="agent"
+     assert conversation.turns[1].content=="we can not add you"
+     assert conversation.turns[1].tool_calls==["refuse_adding"]
+     
+     
+     
+     
+     
+     [{"role": "user","content": "i want you to add me to the list"},
+                   {"role": "chatbot" ,"content": "we can not add you ","tool_calls":["refuse_adding"]}]
+
+
           
