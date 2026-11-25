@@ -97,3 +97,10 @@ def test_conversation_turns():
             "tool_calls": ["refuse_adding"],
         },
     ]
+
+
+def test_invalid_role_is_rejected():
+    turn_data = {"role": "chatbot", "content": "hello"}
+
+    with pytest.raises(ValidationError):
+        Turn.model_validate(turn_data)
