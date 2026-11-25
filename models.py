@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Literal
 
 class Scenario(BaseModel):
     title: str
@@ -13,6 +14,10 @@ class Scenario(BaseModel):
 
 class Turn(BaseModel) :
 
-    role : str 
+    role: Literal["user", "agent"]
     content : str
-    tool_calls:list[str]=[]    
+    tool_calls:list[str]=[] 
+
+
+class Conversation (BaseModel):
+    turns :list[Turn]       
